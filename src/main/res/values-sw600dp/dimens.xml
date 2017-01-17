@@ -1,7 +1,12 @@
 <resources>
     <!-- detail -->
     <dimen name="detail_title_text_size">42sp</dimen>
-    <dimen name="detail_body_text_size">20sp</dimen>
+    <dimen name="detail_body_text_size">14sp</dimen>
+    <!-- body https://material.io/guidelines/style/typography.html# -->
     <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.3</item>
+
     <dimen name="fab_margin">24dp</dimen>
+    <!-- https://material.io/guidelines/components/buttons-floating-action-button.html#buttons-floating-action-button-floating-action-button
+    tablet/desktop spec
+    -->
 </resources>
