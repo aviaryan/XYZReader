@@ -8,5 +8,7 @@
     <string name="action_share">Share</string>
 
     <string name="up">Up</string>
+    <string name="internet_msg">Internet not connected</string>
+    <string name="settings">"SETTINGS"</string>
 
 </resources>

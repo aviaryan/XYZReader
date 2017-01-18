@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +37,7 @@ import com.example.xyzreader.data.UpdaterService;
 public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
+    private final String TAG = "ListActivity";
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -84,14 +87,32 @@ public class ArticleListActivity extends AppCompatActivity implements
         @Override
         public void onReceive(Context context, Intent intent) {
             if (UpdaterService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())) {
-                mIsRefreshing = intent.getBooleanExtra(UpdaterService.EXTRA_REFRESHING, false);
+                mIsRefreshing = intent.getExtras().getBoolean(UpdaterService.EXTRA_REFRESHING);
+                Log.v(TAG, "bool " + mIsRefreshing);
                 updateRefreshingUI();
+                // get result
+                if (!intent.getExtras().getBoolean(UpdaterService.EXTRA_STATUS)) {
+                    // show snackbar
+                    Log.v(TAG, "showing snack bar");
+                    showSnackBar();
+                }
             }
         }
     };
 
     private void updateRefreshingUI() {
          mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
+    }
+
+    private void showSnackBar(){
+        View parentLayout = findViewById(R.id.main_root);
+        Snackbar.make(parentLayout, R.string.internet_msg, Snackbar.LENGTH_INDEFINITE)
+                .setAction("SETTINGS", new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+                        startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                    }
+                }).show();
     }
 
     @Override

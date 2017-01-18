@@ -27,6 +27,8 @@ public class UpdaterService extends IntentService {
             = "com.example.xyzreader.intent.action.STATE_CHANGE";
     public static final String EXTRA_REFRESHING
             = "com.example.xyzreader.intent.extra.REFRESHING";
+    public static final String EXTRA_STATUS
+            = "com.example.xyzreader.intent.extra.STATUS";
 
     public UpdaterService() {
         super(TAG);
@@ -40,11 +42,11 @@ public class UpdaterService extends IntentService {
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if (ni == null || !ni.isConnected()) {
             Log.w(TAG, "Not online, not refreshing.");
+            sendSignal(false, false);
             return;
         }
 
-        sendStickyBroadcast(
-                new Intent(BROADCAST_ACTION_STATE_CHANGE).putExtra(EXTRA_REFRESHING, true));
+        sendSignal(true, true);
 
         // Don't even inspect the intent, we only do one thing, and that's fetch content.
         ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
@@ -53,10 +55,12 @@ public class UpdaterService extends IntentService {
 
         // Delete all items
         cpo.add(ContentProviderOperation.newDelete(dirUri).build());
+        Boolean status = true;
 
         try {
             JSONArray array = RemoteEndpointUtil.fetchJsonArray();
             if (array == null) {
+                status = false;
                 throw new JSONException("Invalid parsed item array" );
             }
 
@@ -81,7 +85,13 @@ public class UpdaterService extends IntentService {
             Log.e(TAG, "Error updating content.", e);
         }
 
+        sendSignal(false, status);
+    }
+
+    private void sendSignal(Boolean refreshing, Boolean status){
         sendStickyBroadcast(
-                new Intent(BROADCAST_ACTION_STATE_CHANGE).putExtra(EXTRA_REFRESHING, false));
+                new Intent(BROADCAST_ACTION_STATE_CHANGE).putExtra(EXTRA_REFRESHING, refreshing)
+                        .putExtra(EXTRA_STATUS, status)
+        );
     }
 }
