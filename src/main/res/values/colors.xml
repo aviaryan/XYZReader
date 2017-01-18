@@ -20,7 +20,7 @@
 
     <!-- https://material.io/guidelines/style/color.html#color-color-schemes -->
     <color name="theme_primary">#3F51B5</color>
-    <color name="theme_primary_dark">#1A237E</color>
+    <color name="theme_primary_dark">#303F9F</color>
     <color name="theme_accent">#FF4081</color>
 
     <color name="ltgray">#ffe0e0e0</color>
