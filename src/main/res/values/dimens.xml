@@ -6,8 +6,9 @@
     <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
 
     <dimen name="fab_elevation">6dp</dimen>
-    <dimen name="fab_press_translation_z">12dp</dimen>
-    <!-- ^^ fab elevation https://material.io/guidelines/material-design/elevation-shadows.html#elevation-shadows-elevation-android -->
+    <dimen name="fab_press_translation_z">6dp</dimen>
+    <!-- ^^ fab elevation https://material.io/guidelines/material-design/elevation-shadows.html#elevation-shadows-elevation-android
+    pressed translation z value is relative -->
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="app_bar_elevation">4dp</dimen>
