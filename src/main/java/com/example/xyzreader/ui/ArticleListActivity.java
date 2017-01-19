@@ -107,7 +107,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     private void showSnackBar(){
         View parentLayout = findViewById(R.id.main_root);
         Snackbar.make(parentLayout, R.string.internet_msg, Snackbar.LENGTH_INDEFINITE)
-                .setAction("SETTINGS", new View.OnClickListener(){
+                .setAction(R.string.internet_action, new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
                         startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);

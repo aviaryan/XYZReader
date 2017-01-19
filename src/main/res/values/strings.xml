@@ -9,7 +9,7 @@
 
     <string name="up">Up</string>
     <string name="internet_msg">Internet not connected</string>
-    <string name="settings">"SETTINGS"</string>
+    <string name="internet_action">CONNECT</string>
     <string name="article_image">Article Header Image</string>
 
 </resources>
